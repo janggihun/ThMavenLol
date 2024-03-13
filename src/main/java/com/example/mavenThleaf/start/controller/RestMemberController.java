@@ -1,0 +1,94 @@
+package com.example.mavenThleaf.start.controller;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.mavenThleaf.start.dto.MemberDto;
+import com.example.mavenThleaf.start.service.MemberService;
+
+import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RestController
+@RequestMapping("/member")
+public class RestMemberController {
+
+	@Autowired
+	MemberService memberService;
+
+	@PostMapping("/join/idCheck")
+	public MemberDto joinIdCheck(MemberDto memberDto, Model model) {
+		MemberDto mDto = memberService.joinIdCheck(memberDto);
+		return mDto;
+	}
+
+	@PostMapping("/addRoulette")
+	public MemberDto addRoulette(MemberDto memberDto, HttpSession httpSession) {
+		String userId = (String) httpSession.getAttribute("userId");
+		memberDto.setUserId(userId);
+		return memberService.addRoulette(memberDto);
+
+	}
+
+	@PostMapping("/rouletteInfo")
+	public MemberDto rouletteInfo(MemberDto memberDto, HttpSession httpSession) {
+//		log.info("aaa");
+		String userId = (String) httpSession.getAttribute("userId");
+		memberDto.setUserId(userId);
+		return memberService.rouletteInfo(memberDto);
+
+	}
+
+	@PostMapping("/minusRoulette")
+	public MemberDto minusRoulette(MemberDto memberDto, HttpSession httpSession) {
+//		log.info("aaa");
+		String userId = (String) httpSession.getAttribute("userId");
+		memberDto.setUserId(userId);
+		return memberService.minusRoulette(memberDto);
+
+	}
+
+	@PostMapping("/findId")
+	public MemberDto findId(@RequestParam String userEmail, MemberDto memberDto, Model model) {
+//		log.info("=====컨트롤러상={}", memberDto);
+		memberDto.setUserEmail(userEmail);
+		MemberDto mid = memberService.findId(memberDto);
+		model.addAttribute("mid", mid);
+		log.info("=====컨트롤러={}", mid);
+
+		return memberService.findId(mid);
+	}
+
+	@PostMapping("/changePw")
+	public int changePw(MemberDto memberDto) {
+//		log.info("==========={}",memberDto);	
+		return memberService.changePw(memberDto);
+
+	}
+
+	@PostMapping("/changeInfo")
+	public int changeInfo(MemberDto memberDto) {
+//		log.info("==========={}",memberDto);	
+		return memberService.changeInfo(memberDto);
+
+	}
+
+	@PostMapping("/findPw/emailCheck")
+	public int emailCheck(MemberDto memberDto) {
+		return memberService.emailCheck(memberDto);
+	}
+
+	@PostMapping("/adminCheck")
+	public Map<String, Object> adminCheck(String userId) {
+//		log.info(userId);
+		return memberService.adminCheck(userId);
+	}
+
+}
