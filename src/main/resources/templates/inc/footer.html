@@ -1,15 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 
 <!-- 	김진문 -->
 
 <link href="/css/kjm/modal_main.css" rel="stylesheet" type="text/css">
 <script defer src="js/kjm/Note/inqMain.js"></script>
-<%@include file="../kjm/inqMain.jsp"%>
-<%@include file="../kjm/sendInq.jsp"%>
-<%@include file="../kjm/eventMessage.jsp"%>
-<%@include file="../kjm/inqdetail.jsp"%>
-<%@include file="../kjm/eventDetail.jsp"%>
+
+
+
+		<div th:insert="~{kjm/inqMain}"></div>
+		
+		<div th:insert="~{kjm/sendInq}"></div>
+		<div th:insert="~{kjm/inqMain}"></div>
+		<div th:insert="~{kjm/eventMessage}"></div>
+		<div th:insert="~{kjm/inqdetail}"></div>
+		<div th:insert="~{kjm/eventDetail}"></div>
+		
 <!-- 김진문 -->
 <!-- 장기훈 -->
 
